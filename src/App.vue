@@ -1,26 +1,40 @@
 <template>
-  <img alt="Vue logo" src="./assets/logo.png">
-  <HelloWorld msg="Welcome to Your Vue.js App"/>
+  <div class="container">
+    <div>Parent Component</div>
+    <h2>{{counterName}}</h2>
+    <h3>Counter - {{count}}</h3>
+    <h3>Counter - {{doubleCount}}</h3>
+    <button @click="counterStore.increment">+</button>
+    <button @click="counterStore.decrement">-</button>
+
+    <hr>
+    <ComponentB/>
+    <hr>
+    <ComponentC/>
+  </div>
 </template>
 
-<script>
-import HelloWorld from './components/HelloWorld.vue'
+<script setup>
 
-export default {
-  name: 'App',
-  components: {
-    HelloWorld
-  }
-}
+import { storeToRefs } from 'pinia'
+import {useCounterStore} from './stores/CounterStore'
+import ComponentB from './components/ComponentB.vue'
+import ComponentC from './components/ComponentC.vue'
+
+const counterStore = useCounterStore()
+const {count,counterName,doubleCount}=storeToRefs(counterStore)
+
 </script>
 
 <style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
+.container{
+  max-width: 300px ;
+  margin: 0 auto;
+}
+button{
+  display: inline-block;
+  margin: 0 5px;
+  padding: 0 10px;
+  font-size: 25px;
 }
 </style>
